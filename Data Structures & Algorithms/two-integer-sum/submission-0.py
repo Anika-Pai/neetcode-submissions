@@ -1,11 +1,9 @@
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        mp = {}
-
-        for i, num in enumerate(nums):
-            complement = target - num;
-
-            if complement in mp:
-                return [mp[complement], i]
-
-            mp[num] = i;
+        seen = {}
+        
+        for i, num in enumerate(nums):            
+            diff = target - num
+            if diff in seen:
+                return [seen[diff], i]
+            seen[num] = i
