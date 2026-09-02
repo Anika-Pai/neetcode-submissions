@@ -1,12 +1,14 @@
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
-        anagrams = {}
+        seen = {}
+
         for s in strs:
-            key = "".join(sorted(s))
+            sorted_s = "".join(sorted(s))
 
-            if key not in anagrams:
-                anagrams[key] =[]
-
-            anagrams[key].append(s)
-
-        return list(anagrams.values())
+            if sorted_s not in seen:
+                seen[sorted_s] = []
+                seen[sorted_s].append(s)
+            else:
+                seen[sorted_s].append(s)
+        
+        return list(seen.values())
