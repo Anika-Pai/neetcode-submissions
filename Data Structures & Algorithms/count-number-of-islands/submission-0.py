@@ -1,37 +1,35 @@
 class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
-        if not grid:
-            return 0
-        
         rows = len(grid)
         cols = len(grid[0])
-        visit = set()
+        visited = set()
         islands = 0
 
-        def bfs(r,c):
-            q = collections.deque()
-            visit.add((r,c))
-            q.append((r,c))
+        def bfs(row,col):
+            q = deque()
+            visited.add((row,col))
+            q.append((row,col))
 
             while q:
-                row, col = q.popleft()
-                directions = [[1,0], [-1,0], [0,1], [0,-1]]
-                for dr, dc in directions:
-                    r = row + dr
-                    c = col + dc
+                r,c = q.popleft()
 
-                    if (r in range(rows) and
-                        c in range(cols) and
-                        grid[r][c] == "1" and
-                        (r,c) not in visit):
-                        q.append((r,c))
-                        visit.add((r,c))
+                dirs = [[1,0], [0,1], [-1,0], [0,-1]]
 
+                for dr, dc in dirs:
+                    newRow = r + dr
+                    newCol = c + dc
 
-        for r in range(rows):
-            for c in range(cols):
-                if grid[r][c] == "1" and (r,c) not in visit:
-                    bfs(r,c)
+                    if (newRow in range(rows) and newCol in range(cols)
+                        and grid[newRow][newCol] == "1"
+                        and (newRow, newCol) not in visited):
+                        visited.add((newRow, newCol))
+                        q.append((newRow, newCol))
+
+        for row in range(rows):
+            for col in range(cols):
+                if (grid[row][col] == "1" 
+                    and (row,col) not in visited):
+                    bfs(row,col)
                     islands += 1
         
         return islands
